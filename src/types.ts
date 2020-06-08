@@ -13,7 +13,7 @@ export interface User {
 export interface Response<T> {
 	success: boolean,
 	reason?: string,
-	data?: T
+	data: T
 }
 
 export interface Config{
