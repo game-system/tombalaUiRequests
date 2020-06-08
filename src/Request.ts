@@ -41,6 +41,9 @@ export default class Request {
 	children(): Promise<Response<User[]>> {
 		return this.get("/users/children")
 	}
+	logout(): Promise<Response<void>> {
+		return this.get("/users/logout")
+	}
 
 
 }
