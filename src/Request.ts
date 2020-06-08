@@ -13,7 +13,7 @@ function genBody(a: StrMap): string {
 export default class Request {
 	private apiAddr: string = "";
 	constructor(c: Config) {
-		const {apiAddr} = c;
+		const { apiAddr } = c;
 		this.apiAddr = apiAddr;
 	}
 	private get<T>(path: string): Promise<Response<T>> {
@@ -23,21 +23,22 @@ export default class Request {
 	private post<T>(path: string, body: StrMap): Promise<Response<T>> {
 		return fetch(`${this.apiAddr}${path}`
 			, {
+				method: "POST",
 				credentials: "include",
 				body: genBody(body),
-				headers:{
-					"content-type":"application/x-www-form-urlencoded"
+				headers: {
+					"content-type": "application/x-www-form-urlencoded"
 				}
 			})
 			.then(d => d.json())
 	}
-	login( id:string, password:string ):Promise<Response<void>>{
-		return this.post("/users/login",{id,password})
+	login(id: string, password: string): Promise<Response<void>> {
+		return this.post("/users/login", { id, password })
 	}
-	me():Promise<Response<User>>{
+	me(): Promise<Response<User>> {
 		return this.get("/users/me")
 	}
-	children():Promise<Response<User[]>>{
+	children(): Promise<Response<User[]>> {
 		return this.get("/users/children")
 	}
 
