@@ -7,7 +7,8 @@ export interface User {
 	is_disabled: boolean,
 	is_seamless: boolean,
 	user_type?: 'system' | 'superadmin' | 'admin' | 'seller' | 'user',
-	date_str?:string
+	date_str?:string,
+	password?:string
 }
 
 export interface Response<T> {

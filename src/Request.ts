@@ -44,6 +44,8 @@ export default class Request {
 	logout(): Promise<Response<void>> {
 		return this.get("/users/logout")
 	}
-
+	addChild({id,password}:User):Promise<Response<User>>{
+		return this.post("/users/new",{id,password})
+	}
 
 }
