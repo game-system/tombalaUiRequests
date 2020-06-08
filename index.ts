@@ -1,3 +1,3 @@
 export  * from "./src/types"
-export * from "./src/Request"
+export {default as Request} from "./src/Request"
 
