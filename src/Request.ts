@@ -47,7 +47,7 @@ export default class Request {
 	private patch<T>(path: string, body: StrMap): Promise<Response<T>> {
 		return fetch(`${this.apiAddr}${path}`
 			, {
-				method: "PATH",
+				method: "PATCH",
 				credentials: "include",
 				body: genBody(body),
 				headers: {
