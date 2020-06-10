@@ -44,6 +44,18 @@ export default class Request {
 			})
 			.then(d => d.json())
 	}
+	private patch<T>(path: string, body: StrMap): Promise<Response<T>> {
+		return fetch(`${this.apiAddr}${path}`
+			, {
+				method: "PATH",
+				credentials: "include",
+				body: genBody(body),
+				headers: {
+					"content-type": "application/x-www-form-urlencoded"
+				}
+			})
+			.then(d => d.json())
+	}
 	login(id: string, password: string): Promise<Response<void>> {
 		return this.post("/users/login", { id, password })
 	}
@@ -59,8 +71,14 @@ export default class Request {
 	addChild({id,password}:User):Promise<Response<User>>{
 		return this.post("/users/new",{id,password})
 	}
-	deleteChild({id}:User,withChildren:boolean):Promise<Response<User>>{
+	deleteChild({id}:User,withChildren:boolean):Promise<Response<void>>{
 		return this.delete(`/users/${id}`,{with_children:withChildren+''})
+	}
+	disableChild({id}:User,withChildren:boolean):Promise<Response<void>>{
+		return this.patch(`/users/${id}/disable`,{with_children:withChildren+''})
+	}
+	enableChild({id}:User,withChildren:boolean):Promise<Response<void>>{
+		return this.patch(`/users/${id}/enable`,{with_children:withChildren+''})
 	}
 
 }
