@@ -20,6 +20,18 @@ export default class Request {
 		return fetch(`${this.apiAddr}${path}`, { credentials: "include" })
 			.then(d => d.json())
 	}
+	private delete<T>(path: string, body: StrMap): Promise<Response<T>> {
+		return fetch(`${this.apiAddr}${path}`
+			, {
+				method: "DELETE",
+				credentials: "include",
+				body: genBody(body),
+				headers: {
+					"content-type": "application/x-www-form-urlencoded"
+				}
+			})
+			.then(d => d.json())
+	}
 	private post<T>(path: string, body: StrMap): Promise<Response<T>> {
 		return fetch(`${this.apiAddr}${path}`
 			, {
@@ -46,6 +58,9 @@ export default class Request {
 	}
 	addChild({id,password}:User):Promise<Response<User>>{
 		return this.post("/users/new",{id,password})
+	}
+	deleteChild({id}:User,withChildren:boolean):Promise<Response<User>>{
+		return this.delete(`/users/${id}`,{with_children:withChildren+''})
 	}
 
 }
