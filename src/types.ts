@@ -48,6 +48,7 @@ export interface Table {
 	tulum: number,
 	first_5: number,
 	first_10: number,
+	min_cards:number
 }
 export interface TableGroup {
 	id: number,
