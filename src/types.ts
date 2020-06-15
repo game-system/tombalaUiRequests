@@ -62,5 +62,5 @@ export interface TableGroup {
 export interface CurrentGameData {
 	game: Game,
 	wallet: Wallet,
-	tables: TableGroup[]
+	table_groups: TableGroup[]
 }
