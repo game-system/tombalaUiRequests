@@ -14,6 +14,7 @@ export interface User {
 export interface Response<T> {
 	success: boolean,
 	reason?: string,
+	sock_token?:string,
 	data: T
 }
 
