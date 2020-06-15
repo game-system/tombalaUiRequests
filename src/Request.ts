@@ -1,4 +1,4 @@
-import { Config, Response, User } from "./types";
+import { Config, Response, User, CurrentGameData } from "./types";
 
 interface StrMap {
 	[key: string]: string
@@ -80,5 +80,7 @@ export default class Request {
 	enableChild({id}:User,withChildren:boolean):Promise<Response<void>>{
 		return this.patch(`/users/${id}/enable`,{with_children:withChildren+''})
 	}
-
+	getGameData(gameID:number):Promise<Response<CurrentGameData>>{
+		return this.get(`/games/tombala/${gameID}`)
+	}
 }
