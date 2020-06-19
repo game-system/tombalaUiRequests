@@ -1,6 +1,6 @@
 {
     "name": "tombalaApi",
-    "version": "0.8.1",
+    "version": "0.8.0",
     "main": "index.ts",
     "license": "MIT",
     "private": true
