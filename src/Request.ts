@@ -68,19 +68,22 @@ export default class Request {
 	logout(): Promise<Response<void>> {
 		return this.get("/users/logout")
 	}
-	addChild({id,password}:User):Promise<Response<User>>{
-		return this.post("/users/new",{id,password})
+	addChild({ id, password }: User): Promise<Response<User>> {
+		return this.post("/users/new", { id, password })
 	}
-	deleteChild({id}:User,withChildren:boolean):Promise<Response<void>>{
-		return this.delete(`/users/${id}`,{with_children:withChildren+''})
+	deleteChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
+		return this.delete(`/users/${id}`, { with_children: withChildren + '' })
 	}
-	disableChild({id}:User,withChildren:boolean):Promise<Response<void>>{
-		return this.patch(`/users/${id}/disable`,{with_children:withChildren+''})
+	disableChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
+		return this.patch(`/users/${id}/disable`, { with_children: withChildren + '' })
 	}
-	enableChild({id}:User,withChildren:boolean):Promise<Response<void>>{
-		return this.patch(`/users/${id}/enable`,{with_children:withChildren+''})
+	enableChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
+		return this.patch(`/users/${id}/enable`, { with_children: withChildren + '' })
 	}
-	getGameData(gameID:number):Promise<Response<CurrentGameData>>{
+	getGameData(gameID: number): Promise<Response<CurrentGameData>> {
 		return this.get(`/games/tombala/${gameID}`)
+	}
+	updateProfile({ id }: User, data: any): Promise<Response<void>> {
+		return this.post(`/${id}`, data)
 	}
 }
