@@ -83,7 +83,7 @@ export default class Request {
 	getGameData(gameID: number): Promise<Response<CurrentGameData>> {
 		return this.get(`/games/tombala/${gameID}`)
 	}
-	updateProfile({ id }: User, data: any): Promise<Response<void>> {
+	updateProfile({ id }: User, data: StrMap): Promise<Response<void>> {
 		return this.post(`/${id}`, data)
 	}
 }
