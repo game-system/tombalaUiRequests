@@ -84,6 +84,6 @@ export default class Request {
 		return this.get(`/games/tombala/${gameID}`)
 	}
 	updateProfile({ id }: User, data: StrMap): Promise<Response<void>> {
-		return this.post(`/${id}`, data)
+		return this.patch(`/users/${id}`, data)
 	}
 }
