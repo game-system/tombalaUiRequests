@@ -1,7 +1,7 @@
-import { Config, Response, User, CurrentGameData } from "./types";
+import { Config, Response, User, CurrentGameData, Wallet } from "./types";
 
 interface StrMap {
-	[key: string]: string
+	[key: string]: any
 }
 function genBody(a: StrMap): string {
 	return Object.keys(a).reduce((state: string[], curr) => {
@@ -85,5 +85,11 @@ export default class Request {
 	}
 	updateProfile({ id }: User, data: StrMap): Promise<Response<void>> {
 		return this.patch(`/users/${id}`, data)
+	}
+	getWallets({id}:User,game_ids:Number[]):Promise<Response<Wallet[]>>{
+		return this.get(`/users/wallets/${id}?ids=${game_ids.join(",")}`)
+	}
+	updateCredit({id}:User,amount:number,game_id:number,is_bonus:boolean,):Promise<Response<number>>{
+		return this.patch(`/users/credit/${id}`,{amount,game_id,is_bonus})
 	}
 }

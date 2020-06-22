@@ -14,7 +14,7 @@ export interface User {
 export interface Response<T> {
 	success: boolean,
 	reason?: string,
-	sock_token?:string,
+	sock_token?: string,
 	data: T
 }
 
@@ -49,7 +49,7 @@ export interface Table {
 	tulum: number,
 	first_5: number,
 	first_10: number,
-	min_cards:number
+	min_cards: number
 }
 export interface TableGroup {
 	id: number,
@@ -66,3 +66,13 @@ export interface CurrentGameData {
 	wallet: Wallet,
 	table_groups: TableGroup[]
 }
+export interface Wallet {
+	id: number,
+	user: string,
+	currency: string,
+	balance: number,
+	bonus_balance: number,
+	game_id: number,
+	game_name: string,
+}
+
