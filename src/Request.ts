@@ -1,4 +1,4 @@
-import { Config, Response, User, CurrentGameData, Wallet } from "./types";
+import { Config, Response, User, CurrentGameData, Wallet, Table } from "./types";
 
 interface StrMap {
 	[key: string]: any
@@ -86,10 +86,25 @@ export default class Request {
 	updateProfile({ id }: User, data: StrMap): Promise<Response<void>> {
 		return this.patch(`/users/${id}`, data)
 	}
-	getWallets({id}:User,game_ids:Number[]):Promise<Response<Wallet[]>>{
+	getWallets({ id }: User, game_ids: Number[]): Promise<Response<Wallet[]>> {
 		return this.get(`/users/wallets/${id}?ids=${game_ids.join(",")}`)
 	}
-	updateCredit({id}:User,amount:number,game_id:number,is_bonus:boolean,):Promise<Response<number>>{
-		return this.patch(`/users/credit/${id}`,{amount,game_id,is_bonus})
+	updateCredit({ id }: User, amount: number, game_id: number, is_bonus: boolean,): Promise<Response<number>> {
+		return this.patch(`/users/credit/${id}`, { amount, game_id, is_bonus });
+	}
+	addTableGroup(game_id: number, name: string, group_type: number, is_bonus: boolean): Promise<Response<number>> {
+		return this.post('/games/tombala/tg', { game_id, name, group_type, is_bonus });
+	}
+	deleteTableGroup(tgID: number): Promise<Response<void>> {
+		return this.delete(`/games/tombala/tg/${tgID}`, {});
+	}
+	addTable(group_id: number, name: string, price: number, c1: number, c2: number, t: number, tulum: number): Promise<Response<number>> {
+		return this.post('/games/tombala/tbl', { group_id, name, price, c1, c2, t, tulum })
+	}
+	deleteTable(id:number): Promise<Response<void>> {
+		return this.delete(`/games/tombala/tbl/${id}`, {});
+	}
+	updateTable(id:number, table:Table):Promise<Response<void>>{
+		return this.patch(`/games/tombala/tbl/${id}`,table);
 	}
 }
