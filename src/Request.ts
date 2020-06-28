@@ -92,7 +92,7 @@ export default class Request {
 	updateCredit({ id }: User, amount: number, game_id: number, is_bonus: boolean,): Promise<Response<number>> {
 		return this.patch(`/users/credit/${id}`, { amount, game_id, is_bonus });
 	}
-	addTableGroup(game_id: number, name: string, group_type: number, is_bonus: boolean): Promise<Response<number>> {
+	addTableGroup(game_id: number, name: string, group_type: string, is_bonus: boolean): Promise<Response<number>> {
 		return this.post('/games/tombala/tg', { game_id, name, group_type, is_bonus });
 	}
 	deleteTableGroup(tgID: number): Promise<Response<void>> {
@@ -101,10 +101,16 @@ export default class Request {
 	addTable(group_id: number, name: string, price: number, c1: number, c2: number, t: number, tulum: number): Promise<Response<number>> {
 		return this.post('/games/tombala/tbl', { group_id, name, price, c1, c2, t, tulum })
 	}
-	deleteTable(id:number): Promise<Response<void>> {
+	deleteTable(id: number): Promise<Response<void>> {
 		return this.delete(`/games/tombala/tbl/${id}`, {});
 	}
-	updateTable(id:number, table:Table):Promise<Response<void>>{
-		return this.patch(`/games/tombala/tbl/${id}`,table);
+	updateTable(id: number, table: Table): Promise<Response<void>> {
+		return this.patch(`/games/tombala/tbl/${id}`, table);
+	}
+	lockCard(tgID: number, cardID: number): Promise<Response<void>> {
+		return this.post(`/cards/lock/${tgID}/${cardID}`, {});
+	}
+	unLockCard(tgID: number, cardID: number): Promise<Response<void>> {
+		return this.post(`/cards/unlock/${tgID}/${cardID}`, {});
 	}
 }

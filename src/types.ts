@@ -55,16 +55,22 @@ export interface TableGroup {
 	id: number,
 	game_id: number,
 	name: String,
-	group_type:number,
+	group_type: "SameCardSameRoomMultiBuy" | "SameCardMultiRoomBuy" | "UserBuysFromSingleTable",
 	is_bonus: boolean,
 	seller_id: String,
 	tables: Table[],
 }
-
+export interface Coupon {
+	card_id: number,
+	table_id: number,
+	uid: string,
+	session_id: number,
+}
 export interface CurrentGameData {
 	game: Game,
 	wallet: Wallet,
-	table_groups: TableGroup[]
+	table_groups: TableGroup[],
+	coupons: Coupon[],
 }
 export interface Wallet {
 	id: number,
