@@ -113,4 +113,7 @@ export default class Request {
 	unLockCard(tgID: number, cardID: number): Promise<Response<void>> {
 		return this.post(`/games/tombala/cards/unlock/${tgID}/${cardID}`, {});
 	}
+	getCardData(tgID: number): Promise<Response<number[]>> {
+		return this.get(`/games/tombala/cards/locked/${tgID}`);
+	}
 }
