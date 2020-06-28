@@ -108,9 +108,9 @@ export default class Request {
 		return this.patch(`/games/tombala/tbl/${id}`, table);
 	}
 	lockCard(tgID: number, cardID: number): Promise<Response<void>> {
-		return this.post(`/cards/lock/${tgID}/${cardID}`, {});
+		return this.post(`/games/tombala/cards/lock/${tgID}/${cardID}`, {});
 	}
 	unLockCard(tgID: number, cardID: number): Promise<Response<void>> {
-		return this.post(`/cards/unlock/${tgID}/${cardID}`, {});
+		return this.post(`/games/tombala/cards/unlock/${tgID}/${cardID}`, {});
 	}
 }
