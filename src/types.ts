@@ -81,4 +81,9 @@ export interface Wallet {
 	game_id: number,
 	game_name: string,
 }
-
+export interface Card {
+	id: number,
+	r1: number[],
+	r2: number[],
+	r3: number[]
+}
