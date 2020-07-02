@@ -13,7 +13,7 @@ export interface User {
 
 export interface Response<T> {
 	success: boolean,
-	reason?: string,
+	reason?: Err,
 	sock_token?: string,
 	data: T
 }
@@ -87,3 +87,28 @@ export interface Card {
 	r2: number[],
 	r3: number[]
 }
+export type Err = 'NotFound'
+	| 'CardIndexNotFound'
+	| 'InvalidParent'
+	| 'AlreadyExists'
+	| 'NothingToUpdate'
+	| 'InvalidCreds'
+	| 'ExecutionCancelled'
+	| 'InsufficientCredit'
+	| 'InsufficientPermissions'
+	| 'InvalidGameType'
+	| 'InvalidTombalaBall'
+	| 'PoisonError'
+	| 'UserDisabled'
+	| 'NoTombalaBallInQueue'
+	| 'InvalidCardData'
+	| { DBInitError: string }
+	| { DBErr: string }
+	| { ConfigErr: string }
+	| { ConnErr: string }
+	| { Unknown: string }
+	| { RedisError: string }
+	| { JsonError: string }
+	| { GameError: string }
+	| { MissingField: string }
+	| { InvalidField: string }
