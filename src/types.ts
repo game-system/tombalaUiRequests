@@ -100,7 +100,7 @@ export type Err = 'NotFound'
 	| 'InvalidTombalaBall'
 	| 'PoisonError'
 	| 'UserDisabled'
-	| 'NoTommbalaBallInQueue'
+	| 'NoTombalaBallInQueue'
 	| 'InvalidCardData'
 	| { DBInitError: string }
 	| { DBErr: string }
