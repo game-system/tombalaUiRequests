@@ -81,4 +81,10 @@ export interface Wallet {
 	game_id: number,
 	game_name: string,
 }
-
+export interface Card {
+	id: number,
+	r1: number[],
+	r2: number[],
+	r3: number[]
+}
+export type Err= 'NotFound' | 'CardIndexNotFound' | 'InvalidParent' | 'AlreadyExists' | 'NothingToUpdate' | 'InvalidCredit' | 'ExecutionCancelled' | 'InsufficientCredit' | 'InsufficientPermissions' | 'InvalidGameType' | 'InvalidTombalaBall' | 'PoisonError' | 'UserDisabled' | 'NoTommbalaBallInQueue' | 'InvalidCardData' | { DBInitError: string } | { DBErr: string } | { ConfigErr: string } | { ConnErr: string } | { Unknown: string } | { RedisError: string } | { JsonError: string } | { GameError: string } | { MissingField: string } | { InvalidField: string }
