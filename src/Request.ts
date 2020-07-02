@@ -1,4 +1,4 @@
-import { Config, Response, User, CurrentGameData, Wallet, Table } from "./types";
+import { Card, Config, CurrentGameData, Response, Table, User, Wallet } from "./types";
 
 interface StrMap {
 	[key: string]: any
@@ -108,9 +108,30 @@ export default class Request {
 		return this.patch(`/games/tombala/tbl/${id}`, table);
 	}
 	lockCard(tgID: number, cardID: number): Promise<Response<void>> {
-		return this.post(`/cards/lock/${tgID}/${cardID}`, {});
+		return this.post(`/games/tombala/cards/lock/${tgID}/${cardID}`, {});
 	}
 	unLockCard(tgID: number, cardID: number): Promise<Response<void>> {
-		return this.post(`/cards/unlock/${tgID}/${cardID}`, {});
+		return this.post(`/games/tombala/cards/unlock/${tgID}/${cardID}`, {});
+	}
+	getLockedCards(tgID: number): Promise<Response<number[]>> {
+		return this.get(`/games/tombala/cards/locked/${tgID}`);
+	}
+	getGameCards(gameId: number): Promise<Response<Card[]>> {
+		return this.get(`/games/tombala/cards/${gameId}`)
+			.then(({ data, success, reason, sock_token }: Response<number[][] | number[]>) => {
+				return {
+					data: (data as any[]).map((c: number[] | number[][]) => {
+						return {
+							id: c[0] as number,
+							r1: c[1] as number[],
+							r2: c[2] as number[],
+							r3: c[3] as number[],
+						}
+					}),
+					reason: reason,
+					success: success,
+					sock_token: sock_token
+				} as Response<Card[]>
+			})
 	}
 }
