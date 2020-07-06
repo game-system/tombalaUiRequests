@@ -17,7 +17,11 @@ export default class Request {
 		this.apiAddr = apiAddr;
 	}
 	private get<T>(path: string): Promise<Response<T>> {
-		return fetch(`${this.apiAddr}${path}`, { credentials: "include" })
+		return fetch(`${this.apiAddr}${path}`, {
+			credentials: "include", headers: {
+				"x-token": localStorage.getItem("token")
+			}
+		})
 			.then(d => d.json())
 	}
 	private delete<T>(path: string, body: StrMap): Promise<Response<T>> {
@@ -27,7 +31,9 @@ export default class Request {
 				credentials: "include",
 				body: genBody(body),
 				headers: {
-					"content-type": "application/x-www-form-urlencoded"
+					"content-type": "application/x-www-form-urlencoded",
+					"x-token": localStorage.getItem("token")
+
 				}
 			})
 			.then(d => d.json())
@@ -39,7 +45,9 @@ export default class Request {
 				credentials: "include",
 				body: genBody(body),
 				headers: {
-					"content-type": "application/x-www-form-urlencoded"
+					"content-type": "application/x-www-form-urlencoded",
+					"x-token": localStorage.getItem("token")
+
 				}
 			})
 			.then(d => d.json())
@@ -51,13 +59,18 @@ export default class Request {
 				credentials: "include",
 				body: genBody(body),
 				headers: {
-					"content-type": "application/x-www-form-urlencoded"
+					"content-type": "application/x-www-form-urlencoded",
+					"x-token": localStorage.getItem("token")
 				}
 			})
 			.then(d => d.json())
 	}
 	login(id: string, password: string): Promise<Response<void>> {
 		return this.post("/users/login", { id, password })
+			.then((d: Response<void>) => {
+				if (d.token) localStorage.setItem("token", d.token)
+				return d
+			})
 	}
 	me(): Promise<Response<User>> {
 		return this.get("/users/me")
