@@ -15,6 +15,7 @@ export interface Response<T> {
 	success: boolean,
 	reason?: Err,
 	sock_token?: string,
+	token?:string,
 	data: T
 }
 
