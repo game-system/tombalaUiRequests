@@ -111,8 +111,8 @@ export default class Request {
 	deleteTableGroup(tgID: number): Promise<Response<void>> {
 		return this.delete(`/games/tombala/tg/${tgID}`, {});
 	}
-	addTable(group_id: number, name: string, price: number, c1: number, c2: number, t: number, tulum: number): Promise<Response<number>> {
-		return this.post('/games/tombala/tbl', { group_id, name, price, c1, c2, t, tulum })
+	addTable(group_id: number, name: string, price: number, c1: number, c2: number, t: number, tulum: number, first_5: number, first_10: number, min_cards: number): Promise<Response<number>> {
+		return this.post('/games/tombala/tbl', { group_id, name, price, c1, c2, t, tulum, first_5, first_10, min_cards })
 	}
 	deleteTable(id: number): Promise<Response<void>> {
 		return this.delete(`/games/tombala/tbl/${id}`, {});
