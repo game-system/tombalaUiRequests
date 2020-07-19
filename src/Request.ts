@@ -72,6 +72,13 @@ export default class Request {
 				return d
 			})
 	}
+	oplogin(id: string, password: string): Promise<Response<{game_id:number}>> {
+		return this.post("/op/login", { id, password })
+			.then((d: Response<{game_id:number}>) => {
+				if (d.token) localStorage.setItem("token", d.token)
+				return d
+			})
+	}
 	me(): Promise<Response<User>> {
 		return this.get("/users/me")
 	}
