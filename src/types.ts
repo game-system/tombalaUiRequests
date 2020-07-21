@@ -72,6 +72,7 @@ export interface CurrentGameData {
 	wallet: Wallet,
 	table_groups: TableGroup[],
 	coupons: Coupon[],
+	video_addr:string,
 }
 export interface Wallet {
 	id: number,
