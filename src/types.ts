@@ -56,7 +56,7 @@ export interface TableGroup {
 	id: number,
 	game_id: number,
 	name: String,
-	group_type: "SameCardSameRoomMultiBuy" | "SameCardMultiRoomBuy" | "UserBuysFromSingleTable",
+	group_type: "SameCardSameRoomMultiBuy" | "SameCardMultiRoomBuy" | "UserBuysFromSingleTable" | "CardCanBeBoughtFromSingleTable",
 	is_bonus: boolean,
 	seller_id: String,
 	tables: Table[],
