@@ -215,7 +215,7 @@ export default class Request {
 		return this.post(`/users/acc/cash/reset`, { password });
 	}
 	async resetAccountingList(): Promise<Response<ResetData[]>> {
-		return this.get(`/users/acc/cash/reset/list`);
+		return this.get(`/users/acc/reset/list`);
 	}
 	async getGameCards(gameId: number): Promise<Response<Card[]>> {
 		const { data, success, reason, sock_token } = await this.get(
