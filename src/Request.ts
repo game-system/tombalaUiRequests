@@ -6,7 +6,7 @@ import {
 	Table,
 	User,
 	Wallet,
-	CashAcc
+	CashAccResponse
 } from "./types";
 
 interface StrMap {
@@ -27,16 +27,17 @@ export default class Request {
 		const { apiAddr } = c;
 		this.apiAddr = apiAddr;
 	}
-	private get<T>(path: string): Promise<Response<T>> {
-		return fetch(`${this.apiAddr}${path}`, {
+	private async get<T>(path: string): Promise<Response<T>> {
+		const d = await fetch(`${this.apiAddr}${path}`, {
 			credentials: "include",
 			headers: {
 				"x-token": localStorage.getItem("token")
 			}
-		}).then(d => d.json());
+		});
+		return await d.json();
 	}
-	private delete<T>(path: string, body: StrMap): Promise<Response<T>> {
-		return fetch(`${this.apiAddr}${path}`, {
+	private async delete<T>(path: string, body: StrMap): Promise<Response<T>> {
+		const d = await fetch(`${this.apiAddr}${path}`, {
 			method: "DELETE",
 			credentials: "include",
 			body: genBody(body),
@@ -44,10 +45,11 @@ export default class Request {
 				"content-type": "application/x-www-form-urlencoded",
 				"x-token": localStorage.getItem("token")
 			}
-		}).then(d => d.json());
+		});
+		return await d.json();
 	}
-	private post<T>(path: string, body: StrMap): Promise<Response<T>> {
-		return fetch(`${this.apiAddr}${path}`, {
+	private async post<T>(path: string, body: StrMap): Promise<Response<T>> {
+		const d = await fetch(`${this.apiAddr}${path}`, {
 			method: "POST",
 			credentials: "include",
 			body: genBody(body),
@@ -55,10 +57,11 @@ export default class Request {
 				"content-type": "application/x-www-form-urlencoded",
 				"x-token": localStorage.getItem("token")
 			}
-		}).then(d => d.json());
+		});
+		return await d.json();
 	}
-	private patch<T>(path: string, body: StrMap): Promise<Response<T>> {
-		return fetch(`${this.apiAddr}${path}`, {
+	private async patch<T>(path: string, body: StrMap): Promise<Response<T>> {
+		const d = await fetch(`${this.apiAddr}${path}`, {
 			method: "PATCH",
 			credentials: "include",
 			body: genBody(body),
@@ -66,64 +69,61 @@ export default class Request {
 				"content-type": "application/x-www-form-urlencoded",
 				"x-token": localStorage.getItem("token")
 			}
-		}).then(d => d.json());
+		});
+		return await d.json();
 	}
-	login(id: string, password: string): Promise<Response<void>> {
-		return this.post("/users/login", { id, password }).then(
-			(d: Response<void>) => {
-				if (d.token) localStorage.setItem("token", d.token);
-				return d;
-			}
-		);
+	async login(id: string, password: string): Promise<Response<void>> {
+		const d: Response<void> = await this.post("/users/login", { id, password });
+		if (d.token)
+			localStorage.setItem("token", d.token);
+		return d;
 	}
-	oplogin(
+	async oplogin(
 		id: string,
 		password: string
 	): Promise<Response<{ game_id: number }>> {
-		return this.post("/op/login", { id, password }).then(
-			(d: Response<{ game_id: number }>) => {
-				if (d.token) localStorage.setItem("token", d.token);
-				return d;
-			}
-		);
+		const d: Response<{ game_id: number }> = await this.post("/op/login", { id, password });
+		if (d.token)
+			localStorage.setItem("token", d.token);
+		return d;
 	}
-	me(): Promise<Response<User>> {
+	async me(): Promise<Response<User>> {
 		return this.get("/users/me");
 	}
-	children(): Promise<Response<User[]>> {
+	async children(): Promise<Response<User[]>> {
 		return this.get("/users/children");
 	}
-	logout(): Promise<Response<void>> {
+	async logout(): Promise<Response<void>> {
 		return this.get("/users/logout");
 	}
-	addChild({ id, password }: User): Promise<Response<User>> {
+	async addChild({ id, password }: User): Promise<Response<User>> {
 		return this.post("/users/new", { id, password });
 	}
-	deleteChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
+	async deleteChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
 		return this.delete(`/users/${id}`, {
 			with_children: withChildren + ""
 		});
 	}
-	disableChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
+	async disableChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
 		return this.patch(`/users/${id}/disable`, {
 			with_children: withChildren + ""
 		});
 	}
-	enableChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
+	async enableChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
 		return this.patch(`/users/${id}/enable`, {
 			with_children: withChildren + ""
 		});
 	}
-	getGameData(gameID: number): Promise<Response<CurrentGameData>> {
+	async getGameData(gameID: number): Promise<Response<CurrentGameData>> {
 		return this.get(`/games/tombala/${gameID}`);
 	}
-	updateProfile({ id }: User, data: StrMap): Promise<Response<void>> {
+	async updateProfile({ id }: User, data: StrMap): Promise<Response<void>> {
 		return this.patch(`/users/${id}`, data);
 	}
-	getWallets({ id }: User, game_ids: Number[]): Promise<Response<Wallet[]>> {
+	async getWallets({ id }: User, game_ids: Number[]): Promise<Response<Wallet[]>> {
 		return this.get(`/users/wallets/${id}?ids=${game_ids.join(",")}`);
 	}
-	updateCredit(
+	async updateCredit(
 		{ id }: User,
 		amount: number,
 		game_id: number,
@@ -131,7 +131,7 @@ export default class Request {
 	): Promise<Response<number>> {
 		return this.patch(`/users/credit/${id}`, { amount, game_id, is_bonus });
 	}
-	addTableGroup(
+async 	addTableGroup(
 		game_id: number,
 		name: string,
 		group_type: string,
@@ -144,10 +144,10 @@ export default class Request {
 			is_bonus
 		});
 	}
-	deleteTableGroup(tgID: number): Promise<Response<void>> {
+	async deleteTableGroup(tgID: number): Promise<Response<void>> {
 		return this.delete(`/games/tombala/tg/${tgID}`, {});
 	}
-	addTable(
+	async addTable(
 		group_id: number,
 		name: string,
 		price: number,
@@ -172,49 +172,49 @@ export default class Request {
 			min_cards
 		});
 	}
-	deleteTable(id: number): Promise<Response<void>> {
+	async deleteTable(id: number): Promise<Response<void>> {
 		return this.delete(`/games/tombala/tbl/${id}`, {});
 	}
-	updateTable(id: number, table: Table): Promise<Response<void>> {
+	async updateTable(id: number, table: Table): Promise<Response<void>> {
 		return this.patch(`/games/tombala/tbl/${id}`, table);
 	}
-	lockCard(tgID: number, cardID: number): Promise<Response<void>> {
+	async lockCard(tgID: number, cardID: number): Promise<Response<void>> {
 		return this.post(`/games/tombala/cards/lock/${tgID}/${cardID}`, {});
 	}
-	unLockCard(tgID: number, cardID: number): Promise<Response<void>> {
+	async unLockCard(tgID: number, cardID: number): Promise<Response<void>> {
 		return this.post(`/games/tombala/cards/unlock/${tgID}/${cardID}`, {});
 	}
-	getLockedCards(tgID: number): Promise<Response<number[]>> {
+	async getLockedCards(tgID: number): Promise<Response<number[]>> {
 		return this.get(`/games/tombala/cards/locked/${tgID}`);
 	}
-	getCashAccounting(
+	async getCashAccounting(
 		year: number,
 		month: number
-	): Promise<Response<CashAcc[]>> {
+	): Promise<Response<CashAccResponse>> {
 		return this.get(`/users/acc/cash/${year}/${month}`);
 	}
-	getGameCards(gameId: number): Promise<Response<Card[]>> {
-		return this.get(`/games/tombala/cards/${gameId}`).then(
-			({
-				data,
-				success,
-				reason,
-				sock_token
-			}: Response<number[][] | number[]>) => {
+	async resetAccounting(password: string) {
+		return this.post(`/users/acc/cash/reset`, { password });
+	}
+	async getGameCards(gameId: number): Promise<Response<Card[]>> {
+		const {
+			data,
+			success,
+			reason,
+			sock_token
+		} = await this.get(`/games/tombala/cards/${gameId}`);
+		return {
+			data: (data as any[]).map((c: number[] | number[][]) => {
 				return {
-					data: (data as any[]).map((c: number[] | number[][]) => {
-						return {
-							id: c[0] as number,
-							r1: c[1] as number[],
-							r2: c[2] as number[],
-							r3: c[3] as number[]
-						};
-					}),
-					reason: reason,
-					success: success,
-					sock_token: sock_token
-				} as Response<Card[]>;
-			}
-		);
+					id: (c[0] as number),
+					r1: (c[1] as number[]),
+					r2: (c[2] as number[]),
+					r3: (c[3] as number[])
+				};
+			}),
+			reason: reason,
+			success: success,
+			sock_token: sock_token
+		} as Response<Card[]>;
 	}
 }

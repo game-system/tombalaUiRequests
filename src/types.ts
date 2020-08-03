@@ -106,6 +106,10 @@ export interface CashAcc {
 	is_bonus: boolean;
 	time: number;
 }
+export interface CashAccResponse {
+	all: CashAcc[];
+	since_reset: CashAcc[];
+}
 
 export type Err =
 	| "NotFound"
