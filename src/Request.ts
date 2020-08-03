@@ -8,7 +8,8 @@ import {
 	Wallet,
 	CashAccResponse,
 	CashAcc,
-	ResetData
+	ResetData,
+	CouponHistory
 } from "./types";
 
 interface StrMap {
@@ -216,6 +217,13 @@ export default class Request {
 	}
 	async resetAccountingList(): Promise<Response<ResetData[]>> {
 		return this.get(`/users/acc/reset/list`);
+	}
+	async tombalaCouponHistory(
+		uid: string,
+		year: number,
+		month: number
+	): Promise<Response<CouponHistory[]>> {
+		return this.get(`/games/tombala/history/${uid}/${year}/${month}`);
 	}
 	async getGameCards(gameId: number): Promise<Response<Card[]>> {
 		const { data, success, reason, sock_token } = await this.get(

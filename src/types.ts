@@ -57,10 +57,10 @@ export interface TableGroup {
 	game_id: number;
 	name: String;
 	group_type:
-	| "SameCardSameRoomMultiBuy"
-	| "SameCardMultiRoomBuy"
-	| "UserBuysFromSingleTable"
-	| "CardCanBeBoughtFromSingleTable";
+		| "SameCardSameRoomMultiBuy"
+		| "SameCardMultiRoomBuy"
+		| "UserBuysFromSingleTable"
+		| "CardCanBeBoughtFromSingleTable";
 	is_bonus: boolean;
 	seller_id: String;
 	tables: Table[];
@@ -95,12 +95,11 @@ export interface Card {
 	r3: number[];
 }
 export interface ResetData {
-	id: number,
-	user_id: string,
-	op_time: number,
-	sent: number,
-	received: number,
-
+	id: number;
+	user_id: string;
+	op_time: number;
+	sent: number;
+	received: number;
 }
 export interface CashAcc {
 	id: number;
@@ -118,6 +117,26 @@ export interface CashAccResponse {
 	all: CashAcc[];
 	since_reset: CashAcc[];
 	last_reset_time: number;
+}
+export interface CouponHistory {
+	id: number;
+	userid: string;
+	couponid: number;
+	price: number;
+	tg_name: string;
+	table_name: string;
+	table_id: number;
+	game_name: string;
+	sessionid: number;
+	op_time: number;
+	buy_time_credit: number;
+	new_credit?: number;
+	c1?: number;
+	c1_5?: number;
+	c2?: number;
+	c2_10?: number;
+	t?: number;
+	tulum?: number;
 }
 
 export type Err =
