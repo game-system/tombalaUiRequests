@@ -57,10 +57,10 @@ export interface TableGroup {
 	game_id: number;
 	name: String;
 	group_type:
-		| "SameCardSameRoomMultiBuy"
-		| "SameCardMultiRoomBuy"
-		| "UserBuysFromSingleTable"
-		| "CardCanBeBoughtFromSingleTable";
+	| "SameCardSameRoomMultiBuy"
+	| "SameCardMultiRoomBuy"
+	| "UserBuysFromSingleTable"
+	| "CardCanBeBoughtFromSingleTable";
 	is_bonus: boolean;
 	seller_id: String;
 	tables: Table[];
@@ -93,6 +93,14 @@ export interface Card {
 	r1: number[];
 	r2: number[];
 	r3: number[];
+}
+export interface ResetData {
+	id: number,
+	user_id: string,
+	op_time: number,
+	sent: number,
+	received: number,
+
 }
 export interface CashAcc {
 	id: number;

@@ -6,7 +6,9 @@ import {
 	Table,
 	User,
 	Wallet,
-	CashAccResponse
+	CashAccResponse,
+	CashAcc,
+	ResetData
 } from "./types";
 
 interface StrMap {
@@ -73,18 +75,22 @@ export default class Request {
 		return await d.json();
 	}
 	async login(id: string, password: string): Promise<Response<void>> {
-		const d: Response<void> = await this.post("/users/login", { id, password });
-		if (d.token)
-			localStorage.setItem("token", d.token);
+		const d: Response<void> = await this.post("/users/login", {
+			id,
+			password
+		});
+		if (d.token) localStorage.setItem("token", d.token);
 		return d;
 	}
 	async oplogin(
 		id: string,
 		password: string
 	): Promise<Response<{ game_id: number }>> {
-		const d: Response<{ game_id: number }> = await this.post("/op/login", { id, password });
-		if (d.token)
-			localStorage.setItem("token", d.token);
+		const d: Response<{ game_id: number }> = await this.post("/op/login", {
+			id,
+			password
+		});
+		if (d.token) localStorage.setItem("token", d.token);
 		return d;
 	}
 	async me(): Promise<Response<User>> {
@@ -99,17 +105,26 @@ export default class Request {
 	async addChild({ id, password }: User): Promise<Response<User>> {
 		return this.post("/users/new", { id, password });
 	}
-	async deleteChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
+	async deleteChild(
+		{ id }: User,
+		withChildren: boolean
+	): Promise<Response<void>> {
 		return this.delete(`/users/${id}`, {
 			with_children: withChildren + ""
 		});
 	}
-	async disableChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
+	async disableChild(
+		{ id }: User,
+		withChildren: boolean
+	): Promise<Response<void>> {
 		return this.patch(`/users/${id}/disable`, {
 			with_children: withChildren + ""
 		});
 	}
-	async enableChild({ id }: User, withChildren: boolean): Promise<Response<void>> {
+	async enableChild(
+		{ id }: User,
+		withChildren: boolean
+	): Promise<Response<void>> {
 		return this.patch(`/users/${id}/enable`, {
 			with_children: withChildren + ""
 		});
@@ -120,7 +135,10 @@ export default class Request {
 	async updateProfile({ id }: User, data: StrMap): Promise<Response<void>> {
 		return this.patch(`/users/${id}`, data);
 	}
-	async getWallets({ id }: User, game_ids: Number[]): Promise<Response<Wallet[]>> {
+	async getWallets(
+		{ id }: User,
+		game_ids: Number[]
+	): Promise<Response<Wallet[]>> {
 		return this.get(`/users/wallets/${id}?ids=${game_ids.join(",")}`);
 	}
 	async updateCredit(
@@ -131,7 +149,7 @@ export default class Request {
 	): Promise<Response<number>> {
 		return this.patch(`/users/credit/${id}`, { amount, game_id, is_bonus });
 	}
-async 	addTableGroup(
+	async addTableGroup(
 		game_id: number,
 		name: string,
 		group_type: string,
@@ -193,23 +211,23 @@ async 	addTableGroup(
 	): Promise<Response<CashAccResponse>> {
 		return this.get(`/users/acc/cash/${year}/${month}`);
 	}
-	async resetAccounting(password: string) {
+	async resetAccounting(password: string): Promise<Response<CashAcc>> {
 		return this.post(`/users/acc/cash/reset`, { password });
 	}
+	async resetAccountingList(): Promise<Response<ResetData[]>> {
+		return this.get(`/users/acc/cash/reset/list`);
+	}
 	async getGameCards(gameId: number): Promise<Response<Card[]>> {
-		const {
-			data,
-			success,
-			reason,
-			sock_token
-		} = await this.get(`/games/tombala/cards/${gameId}`);
+		const { data, success, reason, sock_token } = await this.get(
+			`/games/tombala/cards/${gameId}`
+		);
 		return {
 			data: (data as any[]).map((c: number[] | number[][]) => {
 				return {
-					id: (c[0] as number),
-					r1: (c[1] as number[]),
-					r2: (c[2] as number[]),
-					r3: (c[3] as number[])
+					id: c[0] as number,
+					r1: c[1] as number[],
+					r2: c[2] as number[],
+					r3: c[3] as number[]
 				};
 			}),
 			reason: reason,
