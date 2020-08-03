@@ -117,6 +117,7 @@ export interface CashAcc {
 export interface CashAccResponse {
 	all: CashAcc[];
 	since_reset: CashAcc[];
+	last_reset_time: number;
 }
 
 export type Err =
