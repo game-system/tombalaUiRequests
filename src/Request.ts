@@ -103,8 +103,8 @@ export default class Request {
 	async logout(): Promise<Response<void>> {
 		return this.get("/users/logout");
 	}
-	async addChild({ id, password }: User): Promise<Response<User>> {
-		return this.post("/users/new", { id, password });
+	async addChild({ id, password,note }: User): Promise<Response<User>> {
+		return this.post("/users/new", { id, password,note });
 	}
 	async deleteChild(
 		{ id }: User,

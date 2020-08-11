@@ -9,6 +9,7 @@ export interface User {
 	user_type?: "system" | "superadmin" | "admin" | "seller" | "user";
 	date_str?: string;
 	password?: string;
+	note?:string
 }
 
 export interface Response<T> {
