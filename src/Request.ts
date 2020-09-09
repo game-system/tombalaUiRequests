@@ -138,9 +138,9 @@ export default class Request {
 	}
 	async getWallets(
 		{ id }: User,
-		game_ids: Number[]
+		game_types: string[]
 	): Promise<Response<Wallet[]>> {
-		return this.get(`/users/wallets/${id}?ids=${game_ids.join(",")}`);
+		return this.get(`/users/wallets/${id}?ids=${game_types.join(",")}`);
 	}
 	async updateCredit(
 		{ id }: User,
@@ -148,16 +148,16 @@ export default class Request {
 		game_id: number,
 		is_bonus: boolean
 	): Promise<Response<number>> {
-		return this.patch(`/users/credit/${id}`, { amount, game_id, is_bonus });
+		return this.patch(`/users/credit/${id}`, { amount, game_id: game_id, is_bonus });
 	}
 	async addTableGroup(
-		game_id: number,
+		game_id: string,
 		name: string,
 		group_type: string,
 		is_bonus: boolean
 	): Promise<Response<number>> {
 		return this.post("/games/tombala/tg", {
-			game_id,
+			game_id: game_id,
 			name,
 			group_type,
 			is_bonus
@@ -167,7 +167,7 @@ export default class Request {
 		return this.delete(`/games/tombala/tg/${tgID}`, {});
 	}
 	async addTable(
-		group_id: number,
+		group_type: string,
 		name: string,
 		price: number,
 		c1: number,
@@ -179,7 +179,7 @@ export default class Request {
 		min_cards: number
 	): Promise<Response<number>> {
 		return this.post("/games/tombala/tbl", {
-			group_id,
+			group_id: group_type,
 			name,
 			price,
 			c1,

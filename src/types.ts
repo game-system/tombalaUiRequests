@@ -38,7 +38,7 @@ export interface Wallet {
 	currency: string;
 	balance: number;
 	bonus_balance: number;
-	game_id: number;
+	game_type: string;
 }
 export interface Table {
 	id: number;
