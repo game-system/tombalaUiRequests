@@ -148,16 +148,16 @@ export default class Request {
 		game_id: number,
 		is_bonus: boolean
 	): Promise<Response<number>> {
-		return this.patch(`/users/credit/${id}`, { amount, game_id: game_id, is_bonus });
+		return this.patch(`/users/credit/${id}`, { amount, game_id, is_bonus });
 	}
 	async addTableGroup(
-		game_id: string,
+		game_id: number,
 		name: string,
 		group_type: string,
 		is_bonus: boolean
 	): Promise<Response<number>> {
 		return this.post("/games/tombala/tg", {
-			game_id: game_id,
+			game_id,
 			name,
 			group_type,
 			is_bonus
@@ -167,7 +167,7 @@ export default class Request {
 		return this.delete(`/games/tombala/tg/${tgID}`, {});
 	}
 	async addTable(
-		group_type: string,
+		group_id: number,
 		name: string,
 		price: number,
 		c1: number,
@@ -179,7 +179,7 @@ export default class Request {
 		min_cards: number
 	): Promise<Response<number>> {
 		return this.post("/games/tombala/tbl", {
-			group_id: group_type,
+			group_id,
 			name,
 			price,
 			c1,
