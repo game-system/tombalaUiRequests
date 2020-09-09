@@ -138,9 +138,9 @@ export default class Request {
 	}
 	async getWallets(
 		{ id }: User,
-		game_ids: Number[]
+		game_types: string[]
 	): Promise<Response<Wallet[]>> {
-		return this.get(`/users/wallets/${id}?ids=${game_ids.join(",")}`);
+		return this.get(`/users/wallets/${id}?ids=${game_types.join(",")}`);
 	}
 	async updateCredit(
 		{ id }: User,
