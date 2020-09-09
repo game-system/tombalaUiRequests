@@ -145,10 +145,10 @@ export default class Request {
 	async updateCredit(
 		{ id }: User,
 		amount: number,
-		game_id: number,
+		game_type: string,
 		is_bonus: boolean
 	): Promise<Response<number>> {
-		return this.patch(`/users/credit/${id}`, { amount, game_id, is_bonus });
+		return this.patch(`/users/credit/${id}`, { amount, game_type: game_type, is_bonus });
 	}
 	async addTableGroup(
 		game_id: number,
