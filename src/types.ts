@@ -9,7 +9,7 @@ export interface User {
 	user_type?: "system" | "superadmin" | "admin" | "seller" | "user";
 	date_str?: string;
 	password?: string;
-	note?:string
+	note?: string
 }
 
 export interface Response<T> {
@@ -58,10 +58,10 @@ export interface TableGroup {
 	game_id: number;
 	name: String;
 	group_type:
-		| "SameCardSameRoomMultiBuy"
-		| "SameCardMultiRoomBuy"
-		| "UserBuysFromSingleTable"
-		| "CardCanBeBoughtFromSingleTable";
+	| "SameCardSameRoomMultiBuy"
+	| "SameCardMultiRoomBuy"
+	| "UserBuysFromSingleTable"
+	| "CardCanBeBoughtFromSingleTable";
 	is_bonus: boolean;
 	seller_id: String;
 	tables: Table[];
@@ -79,15 +79,16 @@ export interface CurrentGameData {
 	coupons: Coupon[];
 	video_addr: string;
 	is_auto: boolean;
+	game_details: GameDetails
 }
-export interface Wallet {
-	id: number;
-	user: string;
-	currency: string;
-	balance: number;
-	bonus_balance: number;
-	game_id: number;
-	game_name: string;
+interface GameDetails {
+	id: number,
+	name: String,
+	game_type: string,
+	auto: boolean,
+	created_at: number,
+	video?: string,
+	creator: String,
 }
 export interface Card {
 	id: number;
