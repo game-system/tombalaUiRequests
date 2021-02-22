@@ -22,6 +22,7 @@ export interface Response<T> {
 
 export interface Config {
 	apiAddr: string;
+	token:string;
 }
 
 export interface Game {

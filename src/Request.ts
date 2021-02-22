@@ -26,15 +26,20 @@ function genBody(a: StrMap): string {
 
 export default class Request {
 	private apiAddr: string = "";
+	private token: string;
 	constructor(c: Config) {
-		const { apiAddr } = c;
+		const { apiAddr, token } = c;
 		this.apiAddr = apiAddr;
+		this.token = token;
+	}
+	setToken(token: string): string {
+		return this.token = token;
 	}
 	private async get<T>(path: string): Promise<Response<T>> {
 		const d = await fetch(`${this.apiAddr}${path}`, {
 			credentials: "include",
 			headers: {
-				"x-token": localStorage.getItem("token")
+				"x-token": this.token || localStorage.getItem("token")
 			}
 		});
 		return await d.json();
@@ -46,7 +51,7 @@ export default class Request {
 			body: genBody(body),
 			headers: {
 				"content-type": "application/x-www-form-urlencoded",
-				"x-token": localStorage.getItem("token")
+				"x-token": this.token || localStorage.getItem("token")
 			}
 		});
 		return await d.json();
@@ -58,7 +63,7 @@ export default class Request {
 			body: genBody(body),
 			headers: {
 				"content-type": "application/x-www-form-urlencoded",
-				"x-token": localStorage.getItem("token")
+				"x-token": this.token || localStorage.getItem("token")
 			}
 		});
 		return await d.json();
@@ -70,7 +75,7 @@ export default class Request {
 			body: genBody(body),
 			headers: {
 				"content-type": "application/x-www-form-urlencoded",
-				"x-token": localStorage.getItem("token")
+				"x-token": this.token || localStorage.getItem("token")
 			}
 		});
 		return await d.json();
@@ -103,8 +108,8 @@ export default class Request {
 	async logout(): Promise<Response<void>> {
 		return this.get("/users/logout");
 	}
-	async addChild({ id, password,note }: User): Promise<Response<User>> {
-		return this.post("/users/new", { id, password,note });
+	async addChild({ id, password, note }: User): Promise<Response<User>> {
+		return this.post("/users/new", { id, password, note });
 	}
 	async deleteChild(
 		{ id }: User,
