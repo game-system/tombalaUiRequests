@@ -28,7 +28,7 @@ export default class Request {
 	private apiAddr: string = "";
 	private token: string;
 	constructor(c: Config) {
-		const { apiAddr, token } = c;
+		const {apiAddr, token} = c;
 		this.apiAddr = apiAddr;
 		this.token = token;
 	}
@@ -91,8 +91,8 @@ export default class Request {
 	async oplogin(
 		id: string,
 		password: string
-	): Promise<Response<{ game_id: number }>> {
-		const d: Response<{ game_id: number }> = await this.post("/op/login", {
+	): Promise<Response<{game_id: number}>> {
+		const d: Response<{game_id: number}> = await this.post("/op/login", {
 			id,
 			password
 		});
@@ -108,11 +108,11 @@ export default class Request {
 	async logout(): Promise<Response<void>> {
 		return this.get("/users/logout");
 	}
-	async addChild({ id, password, note }: User): Promise<Response<User>> {
-		return this.post("/users/new", { id, password, note });
+	async addChild({id, password, note}: User): Promise<Response<User>> {
+		return this.post("/users/new", {id, password, note});
 	}
 	async deleteChild(
-		{ id }: User,
+		{id}: User,
 		withChildren: boolean
 	): Promise<Response<void>> {
 		return this.delete(`/users/${id}`, {
@@ -120,7 +120,7 @@ export default class Request {
 		});
 	}
 	async disableChild(
-		{ id }: User,
+		{id}: User,
 		withChildren: boolean
 	): Promise<Response<void>> {
 		return this.patch(`/users/${id}/disable`, {
@@ -128,7 +128,7 @@ export default class Request {
 		});
 	}
 	async enableChild(
-		{ id }: User,
+		{id}: User,
 		withChildren: boolean
 	): Promise<Response<void>> {
 		return this.patch(`/users/${id}/enable`, {
@@ -138,22 +138,22 @@ export default class Request {
 	async getGameData(gameID: number): Promise<Response<CurrentGameData>> {
 		return this.get(`/games/tombala/${gameID}`);
 	}
-	async updateProfile({ id }: User, data: StrMap): Promise<Response<void>> {
+	async updateProfile({id}: User, data: StrMap): Promise<Response<void>> {
 		return this.patch(`/users/${id}`, data);
 	}
 	async getWallets(
-		{ id }: User,
+		{id}: User,
 		game_types: string[]
 	): Promise<Response<Wallet[]>> {
 		return this.get(`/users/wallets/${id}?ids=${game_types.join(",")}`);
 	}
 	async updateCredit(
-		{ id }: User,
+		{id}: User,
 		amount: number,
 		game_type: string,
 		is_bonus: boolean
 	): Promise<Response<number>> {
-		return this.patch(`/users/credit/${id}`, { amount, game_type: game_type, is_bonus });
+		return this.patch(`/users/credit/${id}`, {amount, game_type: game_type, is_bonus});
 	}
 	async addTableGroup(
 		game_id: number,
@@ -218,20 +218,18 @@ export default class Request {
 		return this.get(`/users/acc/cash/${year}/${month}`);
 	}
 	async resetAccounting(password: string): Promise<Response<CashAcc>> {
-		return this.post(`/users/acc/cash/reset`, { password });
+		return this.post(`/users/acc/cash/reset`, {password});
 	}
 	async resetAccountingList(): Promise<Response<ResetData[]>> {
 		return this.get(`/users/acc/reset/list`);
 	}
 	async tombalaCouponHistory(
 		uid: string,
-		year: number,
-		month: number
 	): Promise<Response<CouponHistory[]>> {
-		return this.get(`/games/tombala/history/${uid}/${year}/${month}`);
+		return this.get(`/games/tombala/history/${uid}`);
 	}
 	async getGameCards(gameId: number): Promise<Response<Card[]>> {
-		const { data, success, reason, sock_token } = await this.get(
+		const {data, success, reason, sock_token} = await this.get(
 			`/games/tombala/cards/${gameId}`
 		);
 		return {
