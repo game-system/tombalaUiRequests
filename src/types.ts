@@ -72,6 +72,7 @@ export interface Coupon {
 	table_id: number;
 	uid: string;
 	session_id: number;
+	tg_id: number;
 }
 export interface CurrentGameData {
 	game: Game;
